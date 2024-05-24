@@ -1,0 +1,24 @@
+package ir.jaamebaade.jaamebaade.controller
+
+import ir.jaamebaade.jaamebaade.base.BaseResultFactory
+import ir.jaamebaade.jaamebaade.request.RegisterUserRequest
+import ir.jaamebaade.jaamebaade.base.BaseResult
+import ir.jaamebaade.jaamebaade.service.AuthenticationService
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+
+@RestController
+@RequestMapping("/api/v1/auth")
+class AuthenticationController(
+    private val authenticationService: AuthenticationService,
+) {
+    @PostMapping(value = ["/register"], consumes = ["application/json"], produces = ["application/json"])
+    fun register(@RequestBody registerUserRequest: RegisterUserRequest): ResponseEntity<BaseResult> {
+        val id: Long = authenticationService.register(registerUserRequest)
+            ?: return BaseResultFactory.badRequest("User already exists")
+        return BaseResultFactory.ok(id)
+    }
+}

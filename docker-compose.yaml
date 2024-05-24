@@ -1,3 +1,4 @@
+name: jaamebaade-dev
 services:
   postgres:
     image: registry.docker.ir/postgres:16.3-alpine
