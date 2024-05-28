@@ -1,8 +1,16 @@
 package ir.jaamebaade.jaamebaade.service
 
+import ir.jaamebaade.jaamebaade.configuration.JwtAuthenticationFilter
 import ir.jaamebaade.jaamebaade.model.User
 import ir.jaamebaade.jaamebaade.repository.UserRepository
+import ir.jaamebaade.jaamebaade.request.LoginUserRequest
 import ir.jaamebaade.jaamebaade.request.RegisterUserRequest
+import org.springframework.http.HttpHeaders
+import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.*
@@ -11,6 +19,9 @@ import java.util.*
 class AuthenticationService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
+    private val jwtService: JwtService,
+    private val authenticationManager: AuthenticationManager,
+    private val userDetailsService: UserDetailsService
 ) {
     fun register(registerUserRequest: RegisterUserRequest): Long? {
         val existingUser: Optional<User> = userRepository.findByUsername(registerUserRequest.username)
@@ -28,4 +39,14 @@ class AuthenticationService(
         return user.id
 
     }
+    fun login() : UserDetails? {
+        TODO()
+    }
+    fun loginByCredentials(loginUserRequest: LoginUserRequest): String? {
+        authenticationManager.authenticate(UsernamePasswordAuthenticationToken(loginUserRequest.username, loginUserRequest.password))
+        val userDetails: UserDetails = userDetailsService.loadUserByUsername(loginUserRequest.username)
+        val jwt = jwtService.generateToken(userDetails)
+        return jwt
+    }
+
 }

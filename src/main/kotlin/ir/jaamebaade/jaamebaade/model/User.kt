@@ -2,7 +2,9 @@ package ir.jaamebaade.jaamebaade.model
 
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.util.*
 
 @Entity
 @Table(name = "users")
@@ -27,6 +29,8 @@ data class User(
     var lastName: String? = null,
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+        return Collections.singleton(SimpleGrantedAuthority("user"))
+
         TODO("Not yet implemented")
     }
 
@@ -40,19 +44,23 @@ data class User(
 
 
     override fun isAccountNonExpired(): Boolean {
+        return true
         TODO("Not yet implemented")
     }
 
     override fun isAccountNonLocked(): Boolean {
+        return true
         TODO("Not yet implemented")
+
     }
 
     override fun isCredentialsNonExpired(): Boolean {
+        return true
         TODO("Not yet implemented")
     }
 
     override fun isEnabled(): Boolean {
+        return true
         TODO("Not yet implemented")
     }
-
 }
