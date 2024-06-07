@@ -25,8 +25,8 @@ class AuthenticationController(
 
     @PostMapping(value = ["/login"], consumes = ["application/json"], produces = ["application/json"])
     fun login(@RequestBody loginUserRequest: LoginUserRequest): ResponseEntity<BaseResult> {
-        val token: String = authenticationService.loginByCredentials(loginUserRequest)
-            ?: return BaseResultFactory.badRequest("User already exists")
+        val token: String = authenticationService.login(loginUserRequest)
+            ?: return BaseResultFactory.badRequest("Username and Password doesn't match")
         return BaseResultFactory.ok(token)
     }
 }
