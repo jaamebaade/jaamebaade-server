@@ -25,12 +25,11 @@ class SecurityConfiguration (
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .csrf { obj: CsrfConfigurer<HttpSecurity> -> obj.disable() }
-            .authorizeHttpRequests(
-                Customizer { requests ->
-                    requests // Auth
-                        .requestMatchers("/api/v1/auth/**").permitAll() // Other endpoints
-                }
-            )
+            .authorizeHttpRequests { requests ->
+                requests // Auth
+                    .requestMatchers("/api/v1/auth/**").permitAll() // Other endpoints
+                    .requestMatchers("api/v1/poet/*").permitAll()
+            }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .httpBasic(Customizer.withDefaults<HttpBasicConfigurer<HttpSecurity>>())
             .authenticationProvider(authenticationProvider)
