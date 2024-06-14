@@ -22,7 +22,7 @@ class PoetController(private val poetService: PoetService) {
         return ResponseEntity.ok(poetDtoList)
     }
 
-    @GetMapping(value = ["/api/v1/poet/download/{id}"])
+    @GetMapping(value = ["/download/{id}"])
     fun download(@PathVariable id: Int) : ResponseEntity<HttpHeaders> {
         val downloadUrl = poetService.downloadPoet(id)
         val headers = HttpHeaders()
