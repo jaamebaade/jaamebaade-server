@@ -28,7 +28,7 @@ class SecurityConfiguration (
             .authorizeHttpRequests { requests ->
                 requests // Auth
                     .requestMatchers("/api/v1/auth/**").permitAll() // Other endpoints
-                    .requestMatchers("api/v1/poet/*").permitAll()
+                    .requestMatchers("api/v1/poet/**").permitAll()
             }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .httpBasic(Customizer.withDefaults<HttpBasicConfigurer<HttpSecurity>>())
