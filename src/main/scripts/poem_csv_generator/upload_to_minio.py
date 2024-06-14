@@ -6,7 +6,7 @@ import os
 minio_client = Minio(
     "185.8.174.93:9001",
     access_key="jaamebaade_server_user",
-    secret_key="b0cyyunvV4efjac7zLQduaPyjI9zxWUuFyC8X65Z",
+    secret_key="pass",
     secure=False  # Set to False if your MinIO server does not use SSL
 )
 def upload_file_to_minio(bucket_name, file_path, object_name):
