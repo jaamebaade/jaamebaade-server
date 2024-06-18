@@ -1,5 +1,6 @@
 package ir.jaamebaade.jaamebaade.model
 
+import ir.jaamebaade.jaamebaade.dto.PoetDto
 import jakarta.persistence.*
 
 @Entity
@@ -14,4 +15,15 @@ class Poet {
 
     @Column(columnDefinition = "TEXT", nullable = true)
     var description: String? = null
+
+    @Column(nullable = true)
+    var imageUrl: String? = null
+
+    fun toDto() =
+        PoetDto(
+            id = id!!,
+            name = name!!,
+            description = description,
+            imageUrl = imageUrl
+        )
 }
