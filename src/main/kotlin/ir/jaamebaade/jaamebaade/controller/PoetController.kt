@@ -16,7 +16,7 @@ import java.net.URI
 @RestController
 @RequestMapping("/api/v1/poet")
 class PoetController(private val poetService: PoetService) {
-    @GetMapping(value = ["/"], produces = ["application/json"])
+    @GetMapping(value = [""], produces = ["application/json"])
     fun list(pageable: Pageable): ResponseEntity<Page<PoetDto>> {
         val poetDtoList = poetService.listPoets(pageable)
         return ResponseEntity.ok(poetDtoList)
