@@ -21,11 +21,7 @@ class PoetService(
     fun listPoets(pageable: Pageable): Page<PoetDto>? {
         val poetDtoList = poetRepository.findAll(pageable)
             .map {
-                PoetDto(
-                    id = it.id!!,
-                    name = it.name!!,
-                    description = it.description
-                )
+                it.toDto()
             }
         return poetDtoList
     }
