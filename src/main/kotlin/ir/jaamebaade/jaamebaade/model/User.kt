@@ -1,5 +1,6 @@
 package ir.jaamebaade.jaamebaade.model
 
+import ir.jaamebaade.jaamebaade.dto.UserDto
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -27,11 +28,12 @@ data class User(
 
     @Column(nullable = true)
     var lastName: String? = null,
+
+    @OneToMany
+    var downloadedPoets: List<Poet>? = null,
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return Collections.singleton(SimpleGrantedAuthority("user"))
-
-        TODO("Not yet implemented")
     }
 
     override fun getPassword(): String {
@@ -45,22 +47,27 @@ data class User(
 
     override fun isAccountNonExpired(): Boolean {
         return true
-        TODO("Not yet implemented")
     }
 
     override fun isAccountNonLocked(): Boolean {
         return true
-        TODO("Not yet implemented")
 
     }
 
     override fun isCredentialsNonExpired(): Boolean {
         return true
-        TODO("Not yet implemented")
     }
 
     override fun isEnabled(): Boolean {
         return true
-        TODO("Not yet implemented")
     }
+
+    fun toDto() = UserDto(
+        id = id!!,
+        firstName = firstName,
+        lastName = lastName,
+        username = username!!,
+        email = email,
+        downloadedPoets = downloadedPoets?.map { it.toDto() }
+    )
 }
