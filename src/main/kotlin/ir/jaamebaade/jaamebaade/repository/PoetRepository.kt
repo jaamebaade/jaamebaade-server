@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface PoetRepository : PagingAndSortingRepository<Poet, Int> {
+    fun findById(id: Int): Poet
 }

@@ -1,2 +1,2 @@
 ### list poets
-GET http://localhost:8085/api/v1/poet?page=0&size=10&sort=id
+GET http://localhost:8085/api/v1/poet?size=100
