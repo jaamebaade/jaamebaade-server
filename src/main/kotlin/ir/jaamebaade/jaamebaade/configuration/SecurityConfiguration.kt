@@ -29,6 +29,7 @@ class SecurityConfiguration(
                 requests // Auth
                     .requestMatchers("/api/v1/auth/**").permitAll() // Other endpoints
                     .requestMatchers("/api/v1/poet/**").permitAll()
+                    .requestMatchers("/api/v1/dictionary/**").permitAll()
                     .requestMatchers("/api/v1/user/*").authenticated()
             }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
