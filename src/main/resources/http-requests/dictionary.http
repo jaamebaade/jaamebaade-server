@@ -1,0 +1,8 @@
+### get meaning
+POST localhost:8085/api/v1/dictionary/meaning
+Content-Type: application/json
+
+{
+    "word": "سلام"
+}
+
