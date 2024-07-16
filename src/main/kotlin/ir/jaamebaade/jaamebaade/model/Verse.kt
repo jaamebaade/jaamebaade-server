@@ -25,6 +25,6 @@ class Verse {
     @Column(nullable = false)
     var position: Int? = null
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     var text: String? = null
 }
