@@ -16,5 +16,5 @@ for file1 in "$folder1"/*; do
     
     echo "Zipping files: $file1, $file2, $file3"
     # Zip the files with the same ID
-    zip "poet_$id.zip" "$file1" "$file2" "$file3"
+    zip -j "poet_$id.zip" "$file1" "$file2" "$file3"
 done
