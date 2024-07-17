@@ -11,8 +11,15 @@ class DictionaryService(
 ) {
 
     fun getWordMeaning(wordMeaningRequest: WordMeaningRequest): WordDto? {
-        val word = wordRepository.findByName(wordMeaningRequest.word)
-        return word?.toDto()
+        val words = wordRepository.findAllByName(wordMeaningRequest.word)
+        if (words.isEmpty())
+            return null
+
+        val wordDto = WordDto(
+            name = words.first().name!!,
+            meaning = words.map { it.meaning }.joinToString { it + '\n' }.trim()
+        )
+        return wordDto
 
     }
 
