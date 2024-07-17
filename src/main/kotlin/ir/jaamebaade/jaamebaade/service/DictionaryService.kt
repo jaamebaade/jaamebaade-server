@@ -17,7 +17,7 @@ class DictionaryService(
 
         val wordDto = WordDto(
             name = words.first().name!!,
-            meaning = words.map { it.meaning }.joinToString { it + '\n' }
+            meaning = words.map { it.meaning }.joinToString { it + '\n' }.trim()
         )
         return wordDto
 
