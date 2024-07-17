@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface WordRepository : CrudRepository<Word, Int> {
-    fun findByName(name: String): Word?
+    fun findAllByName(name: String): List<Word>
 }
