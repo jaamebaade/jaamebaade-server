@@ -4,6 +4,7 @@ import io.minio.MinioClient
 import ir.jaamebaade.jaamebaade.dto.PoetDto
 import ir.jaamebaade.jaamebaade.repository.PoetRepository
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -18,6 +19,7 @@ class PoetService(
     @Value("\${minio.bucket.name}")
     val bucketName: String? = null
 
+    @Cacheable(value = ["poetList"], key = "#pageable.pageNumber + '-' + #pageable.pageSize")
     fun listPoets(pageable: Pageable): Page<PoetDto>? {
         val poetDtoList = poetRepository.findAll(pageable)
             .map {

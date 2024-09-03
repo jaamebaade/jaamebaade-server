@@ -3,13 +3,14 @@ package ir.jaamebaade.jaamebaade.service
 import ir.jaamebaade.jaamebaade.dto.WordDto
 import ir.jaamebaade.jaamebaade.repository.WordRepository
 import ir.jaamebaade.jaamebaade.request.WordMeaningRequest
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 @Service
 class DictionaryService(
     private val wordRepository: WordRepository,
 ) {
-
+    @Cacheable(value = ["wordMeaning"], key = "#wordMeaningRequest.word")
     fun getWordMeaning(wordMeaningRequest: WordMeaningRequest): WordDto? {
         val words = wordRepository.findAllByName(wordMeaningRequest.word)
         if (words.isEmpty())
@@ -25,5 +26,4 @@ class DictionaryService(
         return wordDto
 
     }
-
 }
