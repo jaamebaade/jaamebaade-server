@@ -10,5 +10,7 @@ import org.springframework.stereotype.Repository
 interface PoetRepository : PagingAndSortingRepository<Poet, Int> {
     fun findById(id: Int): Poet
 
-    fun findByNameContains(name: String, pageable: Pageable): Page<Poet>
+    fun findByNameContainsOrderById(name: String, pageable: Pageable): Page<Poet>
+
+    fun findAllByOrderById(pageable: Pageable): Page<Poet>
 }
