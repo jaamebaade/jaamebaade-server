@@ -22,9 +22,9 @@ class PoetService(
     @Cacheable(value = ["poetList"], key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #name")
     fun listPoets(pageable: Pageable, name: String?): Page<PoetDto> {
         val poetDtoList = if (name.isNullOrEmpty()) {
-            poetRepository.findAll(pageable)
+            poetRepository.findAllByOrderById(pageable)
         } else {
-            poetRepository.findByNameContains(name, pageable)
+            poetRepository.findByNameContainsOrderById(name, pageable)
         }.map {
             it.toDto()
         }
