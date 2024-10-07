@@ -13,18 +13,21 @@ import java.util.concurrent.TimeUnit
 @Service
 class PoetService(
     private val poetRepository: PoetRepository,
-    private val minioClient: MinioClient
+    private val minioClient: MinioClient,
 ) {
 
     @Value("\${minio.bucket.name}")
     val bucketName: String? = null
 
-    @Cacheable(value = ["poetList"], key = "#pageable.pageNumber + '-' + #pageable.pageSize")
-    fun listPoets(pageable: Pageable): Page<PoetDto>? {
-        val poetDtoList = poetRepository.findAll(pageable)
-            .map {
-                it.toDto()
-            }
+    @Cacheable(value = ["poetList"], key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #name")
+    fun listPoets(pageable: Pageable, name: String?): Page<PoetDto> {
+        val poetDtoList = if (name.isNullOrEmpty()) {
+            poetRepository.findAll(pageable)
+        } else {
+            poetRepository.findByNameContains(name, pageable)
+        }.map {
+            it.toDto()
+        }
         return poetDtoList
     }
 
